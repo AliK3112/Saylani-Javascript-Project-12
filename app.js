@@ -29,3 +29,12 @@ const items = document.querySelectorAll(".deadline-format h4");
 
 let deadlineDate = new Date(2021, 11, 16, 8, 0, 0);
 // console.log(deadlineDate);
+
+const year = deadlineDate.getFullYear();
+const month = months[deadlineDate.getMonth()];
+const date = deadlineDate.getDate();
+const hours = deadlineDate.getHours();
+const minutes = deadlineDate.getMinutes();
+const day = weekdays[deadlineDate.getDay()];
+
+giveaway.textContent = `giveaway ends on ${day}, ${month} ${date} ${year}, ${hours}:${minutes}am`;
