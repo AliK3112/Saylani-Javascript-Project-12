@@ -27,7 +27,7 @@ const deadline = document.querySelector(".deadline");
 const items = document.querySelectorAll(".deadline-format h4");
 // console.log(items);
 
-let deadlineDate = new Date(2021, 11, 17, 8, 0, 0);
+let deadlineDate = new Date(2021, 11, 15, 18, 4, 0);
 // console.log(deadlineDate);
 
 const year = deadlineDate.getFullYear();
@@ -51,6 +51,7 @@ function getRemainingTime() {
   const today = new Date().getTime();
   // console.log(today);
   const t = deadlineDate - today;
+
   // console.log(t);
 
   // ms in a day
@@ -74,10 +75,15 @@ function getRemainingTime() {
 
   // Putting values
   items.forEach((item, index) => {
-    // console.log("PHAKKI");
     item.innerHTML = format(values[index]);
   });
+
+  if (t < 0) {
+    clearInterval(count);
+    deadline.innerHTML = `<h4 class="expired">sorry, this giveaway has expired</h4>`;
+  }
 }
 
 // count down
-let count = setInterval(getRemainingTime(), 1000);
+let count = setInterval(getRemainingTime, 1000);
+getRemainingTime();
