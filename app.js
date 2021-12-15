@@ -27,7 +27,7 @@ const deadline = document.querySelector(".deadline");
 const items = document.querySelectorAll(".deadline-format h4");
 // console.log(items);
 
-let deadlineDate = new Date(2021, 11, 16, 8, 0, 0);
+let deadlineDate = new Date(2021, 11, 17, 8, 0, 0);
 // console.log(deadlineDate);
 
 const year = deadlineDate.getFullYear();
@@ -37,4 +37,47 @@ const hours = deadlineDate.getHours();
 const minutes = deadlineDate.getMinutes();
 const day = weekdays[deadlineDate.getDay()];
 
-giveaway.textContent = `giveaway ends on ${day}, ${month} ${date} ${year}, ${hours}:${minutes}am`;
+giveaway.textContent = `giveaway ends on ${day}, ${month} ${date} ${year}, ${hours}:${minutes}`;
+
+function format(item) {
+  if (item < 10) {
+    item = `0${item}`;
+  }
+  return item;
+}
+
+// Function to calculate difference between current date and deadline date
+function getRemainingTime() {
+  const today = new Date().getTime();
+  // console.log(today);
+  const t = deadlineDate - today;
+  // console.log(t);
+
+  // ms in a day
+  const oneDay = 24 * 60 * 60 * 1000;
+  // ms in an hour
+  const oneHour = 60 * 60 * 1000;
+  // ms in a minute
+  const oneMinute = 60 * 1000;
+
+  // Remaining days
+  let daysLeft = Math.floor(t / oneDay);
+  // Remaining hours
+  let hoursLeft = Math.floor((t % oneDay) / oneHour);
+  // Remaining minutes
+  let minsLeft = Math.floor((t % oneHour) / oneMinute);
+  // Remaining seconds
+  let secsLeft = Math.floor((t % oneMinute) / 1000);
+
+  // Putting these values in an array
+  const values = [daysLeft, hoursLeft, minsLeft, secsLeft];
+
+  // Putting values
+  items.forEach((item, index) => {
+    // console.log("PHAKKI");
+    item.innerHTML = format(values[index]);
+  });
+}
+
+// count down
+let count = setInterval(getRemainingTime(), 1000);
